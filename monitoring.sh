@@ -10,11 +10,12 @@ diskp=$(df | grep "^/dev" | grep -v "/boot$" | awk '{f += $3} {u += $2} END {pri
 cpuu=$(top -b -n1 | grep '^%Cpu' | awk '{printf "%.1f%%", $2+$4}')
 lboot=$(who -b | awk '{printf $3" "$4}')
 lvmtest=$(lsblk | grep "lvm" | wc -l)
-lvmcheck=$(if [$lvmtest -eq 0]; then echo no; else echo yes; fi)
+lvmcheck=$(if [ $lvmtest -eq 0 ]; then echo no; else echo yes; fi)
 etcp=$(ss -s | grep "^TCP:" | awk '{print $4}' | tr -d ',')
 ulog=$(users | wc -w)
 ip=$(hostname -I)
 mac=$(ip link show | awk '$1=="link/ether" {print $2}')
+sudos=$(grep "COMMAND" /var/log/sudo/sudo_logs | wc -l)
 
 echo \
 "#Architecture: $arc
